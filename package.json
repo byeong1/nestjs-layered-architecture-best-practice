@@ -1,0 +1,42 @@
+{
+    "name": "nestjs-rayer-architecture",
+    "version": "1.0.0",
+    "main": "dist/main.js",
+    "license": "MIT",
+    "scripts": {
+        "build": "nest build",
+        "start": "nest start",
+        "start:local": "cross-env NODE_ENV=local nest start --watch",
+        "start:dev": "cross-env NODE_ENV=development nest start --watch",
+        "start:dev:ps": "powershell -Command \"$env:NODE_ENV='development'; nest start --watch\"",
+        "start:debug": "nest start --debug --watch",
+        "start:prod": "cross-env NODE_ENV=production node dist/main"
+    },
+    "dependencies": {
+        "@nestjs/common": "^11.1.12",
+        "@nestjs/config": "^4.0.2",
+        "@nestjs/core": "^11.1.12",
+        "@nestjs/platform-express": "^11.1.12",
+        "@nestjs/swagger": "^11.2.5",
+        "@nestjs/typeorm": "^11.0.0",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.3",
+        "mysql2": "^3.16.2",
+        "reflect-metadata": "^0.2.2",
+        "rxjs": "^7.8.2",
+        "swagger-ui-express": "^5.0.1",
+        "typeorm": "^0.3.28",
+        "uuid": "^13.0.0"
+    },
+    "devDependencies": {
+        "@nestjs/cli": "^11.0.16",
+        "@nestjs/schematics": "^11.0.9",
+        "@types/express": "^5.0.6",
+        "@types/node": "^25.1.0",
+        "@types/uuid": "^11.0.0",
+        "cross-env": "^10.1.0",
+        "ts-node": "^10.9.2",
+        "tsconfig-paths": "^4.2.0",
+        "typescript": "^5.9.3"
+    }
+}
