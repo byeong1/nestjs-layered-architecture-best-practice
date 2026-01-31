@@ -146,13 +146,16 @@ export class FileLoggerService implements OnModuleInit {
     /**
      * 사용 가능한 로그 파일 경로 반환 (크기 제한 체크)
      */
-    private async getAvailableLogFilePath(logType: "api" | "error"): Promise<string> {
+    private async getAvailableLogFilePath(
+        logType: "api" | "error",
+    ): Promise<string> {
         const basePath = this.getLogFilePath(logType);
         const key = basePath;
 
         /* 현재 파일 인덱스 가져오기 */
         let index = this.fileIndex.get(key) || 0;
-        let filePath = index === 0 ? basePath : this.addIndexToPath(basePath, index);
+        let filePath =
+            index === 0 ? basePath : this.addIndexToPath(basePath, index);
 
         /* 파일 크기 체크 */
         try {
@@ -223,9 +226,13 @@ export class FileLoggerService implements OnModuleInit {
                 return;
             }
 
-            const entries = await fsPromises.readdir(this.baseLogDir, { withFileTypes: true });
+            const entries = await fsPromises.readdir(this.baseLogDir, {
+                withFileTypes: true,
+            });
             const now = new Date();
-            const cutoffDate = new Date(now.getTime() - this.maxRetentionDays * 24 * 60 * 60 * 1000);
+            const cutoffDate = new Date(
+                now.getTime() - this.maxRetentionDays * 24 * 60 * 60 * 1000,
+            );
 
             for (const entry of entries) {
                 if (!entry.isDirectory()) continue;
@@ -240,7 +247,10 @@ export class FileLoggerService implements OnModuleInit {
                 /* 보관 기간 초과 시 삭제 */
                 if (folderDate < cutoffDate) {
                     const folderPath = path.join(this.baseLogDir, entry.name);
-                    await fsPromises.rm(folderPath, { recursive: true, force: true });
+                    await fsPromises.rm(folderPath, {
+                        recursive: true,
+                        force: true,
+                    });
                     console.log(`Deleted old log folder: ${folderPath}`);
                 }
             }

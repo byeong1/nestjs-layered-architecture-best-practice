@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from "@nestjs/common";
+import {
+    Controller,
+    Get,
+    Post,
+    Body,
+    Patch,
+    Param,
+    Delete,
+    Query,
+} from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 
 /* Dtos */
@@ -39,16 +48,17 @@ export class PostsController {
     }
 
     @Post()
-    @ApiOperation({
-        summary: "게시글 생성",
-    })
+    @ApiOperation({ summary: "게시글 생성" })
     async create(@Body() createPostDto: CreatePostDto) {
         return this.postsCreateService.create({ createDto: createPostDto });
     }
 
     @Patch(":id")
     @ApiOperation({ summary: "게시글 수정" })
-    async update(@Param() { id }: IdParamDto, @Body() updatePostDto: UpdatePostDto) {
+    async update(
+        @Param() { id }: IdParamDto,
+        @Body() updatePostDto: UpdatePostDto,
+    ) {
         return this.postsUpdateService.update({
             target: { id },
             updateDto: updatePostDto,

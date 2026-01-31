@@ -1,6 +1,6 @@
-import { Global, Module } from '@nestjs/common';
-import { CustomLogger } from '#common/logger/custom-logger.service';
-import { FileLoggerService } from '#common/logger/file-logger.service';
+import { Global, Module } from "@nestjs/common";
+import { CustomLogger } from "#common/logger/custom-logger.service";
+import { FileLoggerService } from "#common/logger/file-logger.service";
 
 /**
  * LoggerModule - 전역 로거 모듈
@@ -10,7 +10,7 @@ import { FileLoggerService } from '#common/logger/file-logger.service';
  */
 @Global()
 @Module({
-  providers: [CustomLogger, FileLoggerService],
-  exports: [CustomLogger, FileLoggerService],
+    providers: [CustomLogger, FileLoggerService],
+    exports: [CustomLogger, FileLoggerService],
 })
 export class LoggerModule {}

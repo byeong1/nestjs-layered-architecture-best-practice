@@ -1,9 +1,17 @@
-import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from "@nestjs/common";
+import {
+    Injectable,
+    NestInterceptor,
+    ExecutionContext,
+    CallHandler,
+} from "@nestjs/common";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import { Request, Response } from "express";
 import { CustomLogger } from "#common/logger/custom-logger.service";
-import { FileLoggerService, LogEntry } from "#common/logger/file-logger.service";
+import {
+    FileLoggerService,
+    LogEntry,
+} from "#common/logger/file-logger.service";
 
 /**
  * LoggingInterceptor - HTTP 요청/응답 로깅 인터셉터
@@ -21,7 +29,10 @@ export class LoggingInterceptor implements NestInterceptor {
         this.logger.setContext(LoggingInterceptor.name);
     }
 
-    intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
+    intercept(
+        context: ExecutionContext,
+        next: CallHandler,
+    ): Observable<unknown> {
         const request = context.switchToHttp().getRequest<Request>();
         const response = context.switchToHttp().getResponse<Response>();
         const { method, url, ip } = request;
@@ -60,7 +71,9 @@ export class LoggingInterceptor implements NestInterceptor {
                     const responseTime = Date.now() - startTime;
 
                     /* 콘솔 로깅 */
-                    this.logger.log(`[Response] ${method} ${url} - ${responseTime}ms`);
+                    this.logger.log(
+                        `[Response] ${method} ${url} - ${responseTime}ms`,
+                    );
 
                     /* 파일 로깅 - 응답 */
                     const responseEntry: LogEntry = {
@@ -79,7 +92,9 @@ export class LoggingInterceptor implements NestInterceptor {
                     const responseTime = Date.now() - startTime;
 
                     /* 콘솔 로깅 */
-                    this.logger.error(`[Error] ${method} ${url} - ${responseTime}ms - ${error.message}`);
+                    this.logger.error(
+                        `[Error] ${method} ${url} - ${responseTime}ms - ${error.message}`,
+                    );
                 },
             }),
         );

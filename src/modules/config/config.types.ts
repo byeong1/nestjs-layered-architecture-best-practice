@@ -1,7 +1,7 @@
-import { AppConfigDto } from './config-dto/app.config.dto';
-import { DatabaseConfigDto } from './config-dto/database.config.dto';
+import { AppConfigDto } from "./config-dto/app.config.dto";
+import { DatabaseConfigDto } from "./config-dto/database.config.dto";
 
-export type Environment = 'development' | 'production' | 'test';
+export type Environment = "development" | "production" | "test";
 
 export type IAppConfig = AppConfigDto;
 export type IDatabaseConfig = DatabaseConfigDto;

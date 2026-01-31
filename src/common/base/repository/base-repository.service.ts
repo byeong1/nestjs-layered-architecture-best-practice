@@ -6,7 +6,7 @@ import {
     FindOptionsSelect,
     FindOptionsRelations,
     ObjectLiteral,
-} from 'typeorm';
+} from "typeorm";
 
 export abstract class BaseRepository<T extends ObjectLiteral> {
     constructor(protected readonly repository: Repository<T>) {}
@@ -45,7 +45,10 @@ export abstract class BaseRepository<T extends ObjectLiteral> {
         return { count: saved.length };
     }
 
-    async update(where: FindOptionsWhere<T>, updateDto: DeepPartial<T>): Promise<T | null> {
+    async update(
+        where: FindOptionsWhere<T>,
+        updateDto: DeepPartial<T>,
+    ): Promise<T | null> {
         await this.repository.update(where, updateDto as any);
         return this.findOne(where);
     }

@@ -1,10 +1,23 @@
 import { BaseRepository } from "../repository/base-repository.service";
 import { BaseResponse } from "../responses/base.response";
 import { IResponse } from "../responses/response.interfaces";
-import { IQuery, ICreateParams, IUpdateParams, IBulkCreateResult, IBulkUpdateResult } from "./base-service.interfaces";
+import {
+    IQuery,
+    ICreateParams,
+    IUpdateParams,
+    IBulkCreateResult,
+    IBulkUpdateResult,
+} from "./base-service.interfaces";
 import { ExceptionFactory } from "#common/exceptions/exception.factory";
 import { BaseException } from "#common/exceptions/base.exception";
-import { FindOptionsWhere, FindOptionsSelect, FindOptionsRelations, Between, IsNull, ObjectLiteral } from "typeorm";
+import {
+    FindOptionsWhere,
+    FindOptionsSelect,
+    FindOptionsRelations,
+    Between,
+    IsNull,
+    ObjectLiteral,
+} from "typeorm";
 
 export abstract class BaseService<T extends ObjectLiteral> {
     constructor(
@@ -64,7 +77,11 @@ export abstract class BaseService<T extends ObjectLiteral> {
         select?: FindOptionsSelect<T>;
         callback?: (data: T) => Promise<T>;
     }): Promise<IResponse> {
-        let data = await this.repository.findOneWithRelations(where, relations, select);
+        let data = await this.repository.findOneWithRelations(
+            where,
+            relations,
+            select,
+        );
 
         if (!data) {
             throw ExceptionFactory.notFound(
@@ -83,10 +100,16 @@ export abstract class BaseService<T extends ObjectLiteral> {
     /**
      * 생성
      */
-    async create({ createDto = {}, checkFields = null, callback }: ICreateParams<T>): Promise<IResponse> {
+    async create({
+        createDto = {},
+        checkFields = null,
+        callback,
+    }: ICreateParams<T>): Promise<IResponse> {
         try {
             if (checkFields && !Array.isArray(createDto)) {
-                const existing = await this.repository.findOne(checkFields as FindOptionsWhere<T>);
+                const existing = await this.repository.findOne(
+                    checkFields as FindOptionsWhere<T>,
+                );
                 if (existing) {
                     throw ExceptionFactory.duplicate(
                         this.RESPONSE_CODE_PREFIX,
@@ -98,7 +121,9 @@ export abstract class BaseService<T extends ObjectLiteral> {
             let data: T | IBulkCreateResult;
 
             if (Array.isArray(createDto)) {
-                const result = await this.repository.createMany(createDto as any);
+                const result = await this.repository.createMany(
+                    createDto as any,
+                );
                 data = { successCount: result.count, createDto };
             } else {
                 data = await this.repository.create(createDto as any);
@@ -121,10 +146,18 @@ export abstract class BaseService<T extends ObjectLiteral> {
     /**
      * 수정
      */
-    async update({ target, updateDto = {}, checkFields = null, callback }: IUpdateParams<T>): Promise<IResponse> {
+    async update({
+        target,
+        updateDto = {},
+        checkFields = null,
+        callback,
+    }: IUpdateParams<T>): Promise<IResponse> {
         try {
             if (!target) {
-                throw ExceptionFactory.badRequest(this.RESPONSE_CODE_PREFIX, "수정 대상이 지정되지 않았습니다.");
+                throw ExceptionFactory.badRequest(
+                    this.RESPONSE_CODE_PREFIX,
+                    "수정 대상이 지정되지 않았습니다.",
+                );
             }
 
             const where = this.buildTargetWhere(target);
@@ -138,8 +171,13 @@ export abstract class BaseService<T extends ObjectLiteral> {
             }
 
             if (checkFields) {
-                const duplicate = await this.repository.findOne(checkFields as FindOptionsWhere<T>);
-                if (duplicate && JSON.stringify(duplicate) !== JSON.stringify(existing)) {
+                const duplicate = await this.repository.findOne(
+                    checkFields as FindOptionsWhere<T>,
+                );
+                if (
+                    duplicate &&
+                    JSON.stringify(duplicate) !== JSON.stringify(existing)
+                ) {
                     throw ExceptionFactory.duplicate(
                         this.RESPONSE_CODE_PREFIX,
                         `중복된 데이터: ${JSON.stringify(checkFields)}`,
@@ -174,7 +212,10 @@ export abstract class BaseService<T extends ObjectLiteral> {
         callback?: (data: T) => Promise<T>;
     }): Promise<IResponse> {
         if (!target) {
-            throw ExceptionFactory.badRequest(this.RESPONSE_CODE_PREFIX, "삭제 대상이 지정되지 않았습니다.");
+            throw ExceptionFactory.badRequest(
+                this.RESPONSE_CODE_PREFIX,
+                "삭제 대상이 지정되지 않았습니다.",
+            );
         }
 
         const where = this.buildTargetWhere(target);
@@ -216,12 +257,18 @@ export abstract class BaseService<T extends ObjectLiteral> {
             return { createdAt: "DESC" };
         }
 
-        const sortArray = Array.isArray(query.sort) ? query.sort : query.sort.split(",");
+        const sortArray = Array.isArray(query.sort)
+            ? query.sort
+            : query.sort.split(",");
         const order: Record<string, "ASC" | "DESC"> = {};
 
         for (const sortField of sortArray) {
             const [field, direction] = sortField.trim().split("-");
-            if (field && direction && ["asc", "desc"].includes(direction.toLowerCase())) {
+            if (
+                field &&
+                direction &&
+                ["asc", "desc"].includes(direction.toLowerCase())
+            ) {
                 order[field] = direction.toUpperCase() as "ASC" | "DESC";
             }
         }
@@ -232,7 +279,10 @@ export abstract class BaseService<T extends ObjectLiteral> {
     /**
      * Where 조건 빌드
      */
-    private buildWhere(where: FindOptionsWhere<T>, query: IQuery): FindOptionsWhere<T> {
+    private buildWhere(
+        where: FindOptionsWhere<T>,
+        query: IQuery,
+    ): FindOptionsWhere<T> {
         const result = { ...where };
 
         if (query?.startDate && query?.endDate) {

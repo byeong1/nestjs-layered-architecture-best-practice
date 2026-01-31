@@ -1,6 +1,6 @@
-import { registerAs } from '@nestjs/config';
-import { CONFIG_NAMESPACE } from '../config.constants';
-import { IDatabaseConfig } from '../config.types';
+import { registerAs } from "@nestjs/config";
+import { CONFIG_NAMESPACE } from "../config.constants";
+import { IDatabaseConfig } from "../config.types";
 
 export default registerAs(
     CONFIG_NAMESPACE.DATABASE,

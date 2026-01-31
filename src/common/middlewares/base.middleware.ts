@@ -1,10 +1,9 @@
 import { Injectable, NestMiddleware } from "@nestjs/common";
 import { Request, Response, NextFunction } from "express";
 
-
 /**
  * base middleware for all middlewares
- * 
+ *
  * @description
  * This middleware is used to test the base route
  */

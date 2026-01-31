@@ -6,9 +6,17 @@ export class ProcessHandler {
 
     static initialize(): void {
         /* 1. unhandledRejection 핸들러 */
-        process.on("unhandledRejection", (reason: unknown, promise: Promise<unknown>) => {
-            this.logger.error("Unhandled Rejection at:", promise, "reason:", reason);
-        });
+        process.on(
+            "unhandledRejection",
+            (reason: unknown, promise: Promise<unknown>) => {
+                this.logger.error(
+                    "Unhandled Rejection at:",
+                    promise,
+                    "reason:",
+                    reason,
+                );
+            },
+        );
 
         /* 2. uncaughtException 핸들러 */
         process.on("uncaughtException", (error: Error) => {
@@ -49,10 +57,14 @@ export class ProcessHandler {
     }
 
     private static safeExit(code: number, reason: string): void {
-        this.logger.warn(`Process will exit with code ${code}. Reason: ${reason}`);
+        this.logger.warn(
+            `Process will exit with code ${code}. Reason: ${reason}`,
+        );
 
         setTimeout(() => {
-            this.logger.error("Could not close connections in time, forcefully shutting down");
+            this.logger.error(
+                "Could not close connections in time, forcefully shutting down",
+            );
             process.exit(code);
         }, 5000).unref();
 

@@ -1,9 +1,9 @@
-import { Injectable, Inject } from '@nestjs/common';
-import { BaseService } from '#common/base/service/base-service.service';
-import { PostsRepository } from '../posts.repository';
-import { PostsResponse } from '../posts.response';
-import { RESPONSE_CODE_PREFIX_POSTS } from '../posts.constants';
-import { Post } from '../entities/post.entity';
+import { Injectable, Inject } from "@nestjs/common";
+import { BaseService } from "#common/base/service/base-service.service";
+import { PostsRepository } from "../posts.repository";
+import { PostsResponse } from "../posts.response";
+import { RESPONSE_CODE_PREFIX_POSTS } from "../posts.constants";
+import { Post } from "../entities/post.entity";
 
 @Injectable()
 export class PostsCreateService extends BaseService<Post> {

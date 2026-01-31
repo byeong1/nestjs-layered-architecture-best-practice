@@ -1,5 +1,5 @@
-import { Type } from 'class-transformer';
-import { IsInt, Min } from 'class-validator';
+import { Type } from "class-transformer";
+import { IsInt, Min } from "class-validator";
 
 /**
  * 단일 ID 파라미터 DTO

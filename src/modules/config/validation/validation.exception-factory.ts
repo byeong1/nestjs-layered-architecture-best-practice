@@ -1,4 +1,4 @@
-import { BadRequestException, ValidationError } from '@nestjs/common';
+import { BadRequestException, ValidationError } from "@nestjs/common";
 
 interface FormattedError {
     property: string;
@@ -31,8 +31,8 @@ export const createValidationExceptionFactory = () => {
         });
 
         return new BadRequestException({
-            code: 'VALIDATION_FAILED',
-            message: 'Validation failed',
+            code: "VALIDATION_FAILED",
+            message: "Validation failed",
             errors: formattedErrors,
         });
     };

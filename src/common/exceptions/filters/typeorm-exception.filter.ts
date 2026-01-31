@@ -1,8 +1,17 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpStatus, Injectable } from "@nestjs/common";
+import {
+    ExceptionFilter,
+    Catch,
+    ArgumentsHost,
+    HttpStatus,
+    Injectable,
+} from "@nestjs/common";
 import { QueryFailedError, EntityNotFoundError } from "typeorm";
 import { Request, Response } from "express";
 import { CustomLogger } from "#common/logger/custom-logger.service";
-import { FileLoggerService, LogEntry } from "#common/logger/file-logger.service";
+import {
+    FileLoggerService,
+    LogEntry,
+} from "#common/logger/file-logger.service";
 
 @Catch(QueryFailedError, EntityNotFoundError)
 @Injectable()
@@ -14,7 +23,10 @@ export class TypeOrmExceptionFilter implements ExceptionFilter {
         this.logger.setContext(TypeOrmExceptionFilter.name);
     }
 
-    catch(exception: QueryFailedError | EntityNotFoundError, host: ArgumentsHost) {
+    catch(
+        exception: QueryFailedError | EntityNotFoundError,
+        host: ArgumentsHost,
+    ) {
         const ctx = host.switchToHttp();
 
         const response = ctx.getResponse<Response>();
@@ -23,7 +35,8 @@ export class TypeOrmExceptionFilter implements ExceptionFilter {
         const { method, url, ip } = request;
 
         const userAgent = request.get("user-agent") || "";
-        const traceId = (request as any).traceId || this.fileLogger.generateTraceId();
+        const traceId =
+            (request as any).traceId || this.fileLogger.generateTraceId();
 
         const isProduction = process.env.NODE_ENV === "production";
 
@@ -44,9 +57,14 @@ export class TypeOrmExceptionFilter implements ExceptionFilter {
 
         /* 콘솔 로깅 */
         if (isProduction) {
-            this.logger.error(`[${status}] ${method} ${url} - ${errorCode}: ${message}`);
+            this.logger.error(
+                `[${status}] ${method} ${url} - ${errorCode}: ${message}`,
+            );
         } else {
-            this.logger.error(`[${status}] ${method} ${url} - ${errorCode}: ${message}`, exception.stack);
+            this.logger.error(
+                `[${status}] ${method} ${url} - ${errorCode}: ${message}`,
+                exception.stack,
+            );
         }
 
         /* 파일 로깅 */

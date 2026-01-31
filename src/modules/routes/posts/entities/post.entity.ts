@@ -5,9 +5,9 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     DeleteDateColumn,
-} from 'typeorm';
+} from "typeorm";
 
-@Entity('posts')
+@Entity("posts")
 export class Post {
     @PrimaryGeneratedColumn()
     id: number;
@@ -15,7 +15,7 @@ export class Post {
     @Column({ length: 200 })
     title: string;
 
-    @Column({ type: 'text' })
+    @Column({ type: "text" })
     content: string;
 
     @Column({ length: 100, nullable: true })

@@ -1,19 +1,19 @@
 import {
-  Injectable,
-  NestInterceptor,
-  ExecutionContext,
-  CallHandler,
-} from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { CustomLogger } from '#common/logger/custom-logger.service';
+    Injectable,
+    NestInterceptor,
+    ExecutionContext,
+    CallHandler,
+} from "@nestjs/common";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { CustomLogger } from "#common/logger/custom-logger.service";
 
 /**
  * 표준 응답 포맷 인터페이스
  */
 export interface TransformedResponse<T> {
-  success: boolean;
-  data: T;
+    success: boolean;
+    data: T;
 }
 
 /**
@@ -23,25 +23,26 @@ export interface TransformedResponse<T> {
  * 출력 형식: { success: true, data: ... }
  */
 @Injectable()
-export class TransformInterceptor<T>
-  implements NestInterceptor<T, TransformedResponse<T>>
-{
-  constructor(private readonly logger: CustomLogger) {
-    this.logger.setContext(TransformInterceptor.name);
-  }
+export class TransformInterceptor<T> implements NestInterceptor<
+    T,
+    TransformedResponse<T>
+> {
+    constructor(private readonly logger: CustomLogger) {
+        this.logger.setContext(TransformInterceptor.name);
+    }
 
-  intercept(
-    context: ExecutionContext,
-    next: CallHandler<T>,
-  ): Observable<TransformedResponse<T>> {
-    return next.handle().pipe(
-      map((data) => {
-        this.logger.debug('Response transformed to standard format');
-        return {
-          success: true,
-          data,
-        };
-      }),
-    );
-  }
+    intercept(
+        context: ExecutionContext,
+        next: CallHandler<T>,
+    ): Observable<TransformedResponse<T>> {
+        return next.handle().pipe(
+            map((data) => {
+                this.logger.debug("Response transformed to standard format");
+                return {
+                    success: true,
+                    data,
+                };
+            }),
+        );
+    }
 }

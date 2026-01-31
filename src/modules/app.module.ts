@@ -1,23 +1,23 @@
 /* THIRD-PARTY */
-import { Module } from '@nestjs/common';
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { Module } from "@nestjs/common";
+import { APP_FILTER, APP_INTERCEPTOR } from "@nestjs/core";
 
 /* MODULE */
-import { ConfigModule } from './config/config.module';
-import { DatabaseModule } from './database/database.module';
-import { RoutesModule } from './routes/routes.module';
-import { LoggerModule } from '#common/logger/logger.module';
+import { ConfigModule } from "./config/config.module";
+import { DatabaseModule } from "./database/database.module";
+import { RoutesModule } from "./routes/routes.module";
+import { LoggerModule } from "#common/logger/logger.module";
 
 /* CONTROLLER */
-import { AppController } from './app.controller';
+import { AppController } from "./app.controller";
 
 /* FILTER */
-import { HttpExceptionFilter } from '#common/exceptions/filters/http-exception.filter';
-import { TypeOrmExceptionFilter } from '#common/exceptions/filters/typeorm-exception.filter';
+import { HttpExceptionFilter } from "#common/exceptions/filters/http-exception.filter";
+import { TypeOrmExceptionFilter } from "#common/exceptions/filters/typeorm-exception.filter";
 
 /* INTERCEPTOR */
-import { LoggingInterceptor } from '#common/interceptors/logging.interceptor';
-import { TransformInterceptor } from '#common/interceptors/transform.interceptor';
+import { LoggingInterceptor } from "#common/interceptors/logging.interceptor";
+import { TransformInterceptor } from "#common/interceptors/transform.interceptor";
 
 @Module({
     imports: [

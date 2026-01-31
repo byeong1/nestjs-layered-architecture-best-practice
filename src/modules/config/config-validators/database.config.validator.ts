@@ -1,8 +1,10 @@
-import { plainToInstance } from 'class-transformer';
-import { validateSync } from 'class-validator';
-import { DatabaseConfigDto } from '../config-dto/database.config.dto';
+import { plainToInstance } from "class-transformer";
+import { validateSync } from "class-validator";
+import { DatabaseConfigDto } from "../config-dto/database.config.dto";
 
-export const validateDatabaseConfig = (config: Record<string, unknown>): DatabaseConfigDto => {
+export const validateDatabaseConfig = (
+    config: Record<string, unknown>,
+): DatabaseConfigDto => {
     const validatedConfig = plainToInstance(DatabaseConfigDto, {
         host: config.DB_HOST,
         port: config.DB_PORT,
@@ -17,7 +19,9 @@ export const validateDatabaseConfig = (config: Record<string, unknown>): Databas
     });
 
     if (errors.length > 0) {
-        throw new Error(`Database config validation failed: ${errors.toString()}`);
+        throw new Error(
+            `Database config validation failed: ${errors.toString()}`,
+        );
     }
 
     return validatedConfig;

@@ -17,7 +17,9 @@ export class ConfigService {
     }
 
     get dbConfig(): IDatabaseConfig {
-        return this.configService.get<IDatabaseConfig>(CONFIG_NAMESPACE.DATABASE)!;
+        return this.configService.get<IDatabaseConfig>(
+            CONFIG_NAMESPACE.DATABASE,
+        )!;
     }
 
     get port(): number {
