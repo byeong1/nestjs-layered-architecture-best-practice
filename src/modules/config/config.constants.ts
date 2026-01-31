@@ -3,6 +3,7 @@ import { CorsOptions } from "@nestjs/common/interfaces/external/cors-options.int
 export const CONFIG_NAMESPACE = {
     APP: "app",
     DATABASE: "database",
+    TELEMETRY: "telemetry",
 };
 
 export const CORS_CONFIG: CorsOptions = {

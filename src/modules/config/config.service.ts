@@ -6,7 +6,7 @@ import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 import { CONFIG_NAMESPACE } from "./config.constants";
 
 /* Types */
-import { IAppConfig, IDatabaseConfig } from "./config.types";
+import { IAppConfig, IDatabaseConfig, ITelemetryConfig } from "./config.types";
 
 @Injectable()
 export class ConfigService {
@@ -19,6 +19,12 @@ export class ConfigService {
     get dbConfig(): IDatabaseConfig {
         return this.configService.get<IDatabaseConfig>(
             CONFIG_NAMESPACE.DATABASE,
+        )!;
+    }
+
+    get telemetryConfig(): ITelemetryConfig {
+        return this.configService.get<ITelemetryConfig>(
+            CONFIG_NAMESPACE.TELEMETRY,
         )!;
     }
 
