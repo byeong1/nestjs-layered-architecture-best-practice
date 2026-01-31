@@ -43,6 +43,14 @@ async function bootstrap() {
 
     logger.log(`Application is running on: http://localhost:${port}`);
     logger.log(`Swagger docs: http://localhost:${port}/api-docs`);
+    logger.log(`Health check: http://localhost:${port}/health`);
+
+    if (process.env.OTEL_ENABLED === "true") {
+        const metricsPort = process.env.OTEL_METRICS_PORT || "9464";
+        logger.log(
+            `OpenTelemetry enabled - Metrics: http://localhost:${metricsPort}/metrics`,
+        );
+    }
 }
 
 bootstrap();

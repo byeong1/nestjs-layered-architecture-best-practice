@@ -5,7 +5,9 @@ import { APP_FILTER, APP_INTERCEPTOR } from "@nestjs/core";
 /* MODULE */
 import { ConfigModule } from "./config/config.module";
 import { DatabaseModule } from "./database/database.module";
+import { HealthModule } from "./health/health.module";
 import { RoutesModule } from "./routes/routes.module";
+import { TelemetryModule } from "./telemetry/telemetry.module";
 import { LoggerModule } from "#common/logger/logger.module";
 
 /* CONTROLLER */
@@ -29,6 +31,12 @@ import { TransformInterceptor } from "#common/interceptors/transform.interceptor
 
         /* Logger 모듈 */
         LoggerModule,
+
+        /* Health 모듈 */
+        HealthModule,
+
+        /* Telemetry 모듈 */
+        TelemetryModule,
 
         /* 라우트 모듈 */
         RoutesModule,
