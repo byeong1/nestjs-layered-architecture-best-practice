@@ -1,4 +1,5 @@
 import { NestFactory } from "@nestjs/core";
+import * as cookieParser from "cookie-parser";
 
 /* Module */
 import { AppModule } from "#modules/app.module";
@@ -24,6 +25,9 @@ async function bootstrap() {
 
     /* 커스텀 로거를 사용하여 앱 생성 */
     const app = await NestFactory.create(AppModule, { logger });
+
+    /* 쿠키 파서 설정 */
+    app.use(cookieParser());
 
     /* 전역 파이프 설정 */
     app.useGlobalPipes(validationPipeConfig);
