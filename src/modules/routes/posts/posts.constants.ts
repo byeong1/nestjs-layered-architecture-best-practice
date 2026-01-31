@@ -1,0 +1,1 @@
+export const RESPONSE_CODE_PREFIX_POSTS = 'POSTS';
